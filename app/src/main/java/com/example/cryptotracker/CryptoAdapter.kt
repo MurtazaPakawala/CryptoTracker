@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.crypto_item.view.*
+import java.text.DecimalFormat
 import java.util.zip.Inflater
 
 class CryptoAdapter(private val context: Context, private val crypto: List<Crypto>) : RecyclerView.Adapter<CryptoAdapter.ViewHolder>() {
@@ -25,9 +26,10 @@ class CryptoAdapter(private val context: Context, private val crypto: List<Crypt
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Crypto) {
+            val df2= DecimalFormat("#.##")
             itemView.tvName.text = item.name
             itemView.tvSymbol.text =item.symbol
-            itemView.tvPrice.text =item.price.USD.price.toString()
+            itemView.tvPrice.text ="$  ${df2.format(item.price.USD.price)}"
 
         }
     }
