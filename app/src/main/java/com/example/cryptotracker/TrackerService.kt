@@ -9,5 +9,5 @@ interface TrackerService {
     @GET("cryptocurrency/listings/latest")
     fun SearchCrypto(
         @Header("X-CMC_PRO_API_KEY") authHeader :String
-    ) : Call<Any>
+    ) : Call<CryptoResult>
 }

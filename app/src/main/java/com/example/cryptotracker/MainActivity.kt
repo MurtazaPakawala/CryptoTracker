@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build()
         val trackerService =retrofit.create(TrackerService::class.java)
-        trackerService.SearchCrypto("${API_KEY}").enqueue(object :Callback<Any>{
-            override fun onResponse(call: Call<Any>, response: Response<Any>) {
+        trackerService.SearchCrypto("${API_KEY}").enqueue(object :Callback<CryptoResult>{
+            override fun onResponse(call: Call<CryptoResult>, response: Response<CryptoResult>) {
                 Log.i(TAG,"responose is $response")
             }
 
-            override fun onFailure(call: Call<Any>, t: Throwable) {
+            override fun onFailure(call: Call<CryptoResult>, t: Throwable) {
                 Log.i(TAG,"failure is ${t}")
             }
 
