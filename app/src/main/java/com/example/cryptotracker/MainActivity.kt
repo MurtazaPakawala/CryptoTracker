@@ -4,6 +4,9 @@ package com.example.cryptotracker
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Adapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +20,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        //recycler view stuff
+        //1 step dragging it -done
+        //now make the layout
+        rvCrypto.layoutManager =LinearLayoutManager(this)
+        //getting the data
+        val crypto = mutableListOf<Crypto>()
+        //making the adapter
+        val adapter = CryptoAdapter(this,crypto)
+        rvCrypto.adapter =adapter
+
+
         val retrofit =
             Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -24,7 +39,15 @@ class MainActivity : AppCompatActivity() {
         val trackerService =retrofit.create(TrackerService::class.java)
         trackerService.SearchCrypto("${API_KEY}").enqueue(object :Callback<CryptoResult>{
             override fun onResponse(call: Call<CryptoResult>, response: Response<CryptoResult>) {
-                Log.i(TAG,"responose is $response")
+                val body = response.body()
+                if(body==null)
+                {
+                    Log.w("TAG","did not get a valid response something is wrong please check again")
+                    return
+                }
+
+                crypto.addAll(body.cryptos)
+                adapter.notifyDataSetChanged()
             }
 
             override fun onFailure(call: Call<CryptoResult>, t: Throwable) {

@@ -3,10 +3,10 @@ package com.example.cryptotracker
 import com.google.gson.annotations.SerializedName
 
 data class CryptoResult(
-    @SerializedName("data") val cryptos : List<Crpto>
+    @SerializedName("data") val cryptos : List<Crypto>
 )
 
-data class Crpto (
+data class Crypto (
 
     val name : String,
     val symbol : String,
